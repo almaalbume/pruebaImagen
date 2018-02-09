@@ -5,6 +5,9 @@ import * as html2canvas from 'html2canvas';
 import { File } from '@ionic-native/file';
 import * as $ from "jquery";
 
+declare var cordova: any;
+
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -16,39 +19,19 @@ export class HomePage {
   }
 
   generatePdf() {
-    //console.log(document.querySelector("#capture"))
-
-    html2canvas(document.querySelector("#capture")).then(canvas => {
-      //   console.log(canvas)
-
-      var doc = new jsPDF("p", "mm", "a4");
-      let imgData = canvas.toDataURL("image/PNG");
-      console.log(imgData)
-      //doc.addImage(imgData, 'PNG', 20, 20);
-      
-      //let pdfOutput = doc.output();
-      
-      //   let buffer = new ArrayBuffer(pdfOutput.length);
-      //   let array = new Uint8Array(buffer);
-
-      //   for (var i = 0; i < pdfOutput.length; i++) {
-      //     array[i] = pdfOutput.charCodeAt(i);
-      //   }
-
-      // const directory = this.file.externalApplicationStorageDirectory;
 
 
-      // const fileName = "example.pdf";
+    let html = '<div id="capture" name="capture" style="padding: 10px; background: #f5da55"><h4 style="color: #000; ">Hello world!</h4></div>';
 
+    cordova.plugins.pdf.htmlToPDF({
+      data: html,
+      documentSize: "A4",
+      landscape: "portrait",
+      type: "share"
+    }, (sucess) =>
+        $('#rawH').html(sucess),
+      (error) => console.log('error:', error));
 
-      // this.file.writeFile(directory, fileName, buffer)
-      //   .then((success) => console.log("File created Succesfully" + JSON.stringify(success)))
-      //   .catch((error) => console.log("Cannot Create File " + JSON.stringify(error)));
-
-
-
-
-    });
   }
 
 }
