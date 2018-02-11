@@ -19,19 +19,24 @@ export class HomePage {
   }
 
   generatePdf() {
+    const div = document.getElementById("capture");
+    const options = { background: "white", height: div.clientHeight, width: div.clientWidth };
 
+    console.log(div);
 
-    let html = '<div id="capture" name="capture" style="padding: 10px; background: #f5da55"><h4 style="color: #000; ">Hello world!</h4></div>';
-
-    cordova.plugins.pdf.htmlToPDF({
-      data: html,
-      documentSize: "A4",
-      landscape: "portrait",
-      type: "share"
-    }, (sucess) =>
-        $('#rawH').html(sucess),
-      (error) => console.log('error:', error));
-
+    html2canvas(div, options).then((canvas) => {
+      let imgData = canvas.toDataURL("image/PNG");
+      console.log(imgData)
+      let html = ' <img src="' + imgData + '"/>';
+      cordova.plugins.pdf.htmlToPDF({
+        data: html,
+        documentSize: "A4",
+        landscape: "portrait",
+        type: "share"
+      }, (sucess) =>
+          $('#rawH').html(sucess),
+        (error) => console.log('error:', error));
+    })
   }
 
 }

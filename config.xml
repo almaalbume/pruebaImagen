@@ -84,5 +84,6 @@
     <plugin name="cordova-pdf-generator" spec="^1.9.3" />
     <plugin name="cordova-plugin-spinner" spec="^1.1.0" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
+    <allow-navigation href="http://192.168.0.12:8100" />
     <engine name="android" spec="7.0.0" />
 </widget>
